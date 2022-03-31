@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=crud_node
+  app:
+    build: .
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app:ro
+    environment:
+    - NODE_ENV=docker
