@@ -9,6 +9,6 @@ export default async function(){
   const itensAmount = await itemRepository.findAndCount()
   
   if(!itensAmount[1]){
-    itemRepository.populateTable()
+    await itemRepository.populateTable()
   }
 }
