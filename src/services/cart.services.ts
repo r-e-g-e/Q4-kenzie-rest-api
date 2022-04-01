@@ -1,6 +1,6 @@
 import { getCustomRepository } from "typeorm"
 import CartRepository from "../repositories/cart.repository"
-import ItemCartRepository from "../repositories/itemCard.repository"
+import ItemCartRepository from "../repositories/itemCart.repository"
 
 interface Iitem{
   itemId: number
