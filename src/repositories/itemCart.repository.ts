@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from "typeorm"
-import ItemCard from "../entities/ItemCart"
+import ItemCart from "../entities/ItemCart"
 
-@EntityRepository(ItemCard)
-export default class ItemCartRepository extends Repository<ItemCard>{}
+@EntityRepository(ItemCart)
+export default class ItemCartRepository extends Repository<ItemCart>{}
