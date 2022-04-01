@@ -1,6 +1,6 @@
 import { Entity, OneToOne, JoinColumn, PrimaryGeneratedColumn, JoinTable, OneToMany } from "typeorm"
 import User from "./User"
-import ItemCard from "./ItemCard"
+import ItemCard from "./ItemCart"
 
 @Entity("carts")
 export default class Cart{

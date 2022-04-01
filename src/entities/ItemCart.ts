@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column } from "t
 import Cart from "./Cart"
 import Item from "./Item"
 
-@Entity("item_card")
+@Entity("item_cart")
 export default class ItemCard{
   @PrimaryGeneratedColumn("uuid")
   readonly id: string
@@ -17,4 +17,4 @@ export default class ItemCard{
 
   @Column()
   quantity: number
-}
+} 

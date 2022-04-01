@@ -1,6 +1,6 @@
 import { getCustomRepository } from "typeorm"
 import CartRepository from "../repositories/cart.repository"
-import ItemCardRepository from "../repositories/itemCard.repository"
+import ItemCartRepository from "../repositories/itemCard.repository"
 
 interface Iitem{
   itemId: number
@@ -9,7 +9,7 @@ interface Iitem{
 
 export async function getAllItens(userId:string){
   const cartRepository = getCustomRepository(CartRepository)
-  const itemCardRepository = getCustomRepository(ItemCardRepository)
+  const itemCartRepository = getCustomRepository(ItemCartRepository)
 
   const cart = await cartRepository.findOne({
     where:{
@@ -17,7 +17,7 @@ export async function getAllItens(userId:string){
     }
   })
 
-  const itens = await itemCardRepository.find({
+  const itens = await itemCartRepository.find({
     where:{
       cartId: cart.id
     },
@@ -34,7 +34,7 @@ export async function getAllItens(userId:string){
 
 export async function addItem(userId:string, {itemId, quantity}:Iitem){
   const cartRepository = getCustomRepository(CartRepository)
-  const itemCardRepository = getCustomRepository(ItemCardRepository)
+  const itemCartRepository = getCustomRepository(ItemCartRepository)
 
   const cart = await cartRepository.findOne({
     where:{
@@ -42,20 +42,20 @@ export async function addItem(userId:string, {itemId, quantity}:Iitem){
     }
   })
 
-  const newItem = itemCardRepository.create({
+  const newItem = itemCartRepository.create({
     cartId: cart.id,
     itemId,
     quantity
   })
 
-  await itemCardRepository.save(newItem)
+  await itemCartRepository.save(newItem)
   
   return newItem
 }
 
 export async function removeItem(userId:string, itemId: string){
   const cartRepository = getCustomRepository(CartRepository)
-  const itemCardRepository = getCustomRepository(ItemCardRepository)
+  const itemCartRepository = getCustomRepository(ItemCartRepository)
 
   const cart = await cartRepository.findOne({
     where:{
@@ -63,7 +63,7 @@ export async function removeItem(userId:string, itemId: string){
     }
   })
 
-  const itemToRemove = await itemCardRepository.findOne({
+  const itemToRemove = await itemCartRepository.findOne({
     where:{
       id: itemId,
       cartId: cart.id
@@ -71,23 +71,23 @@ export async function removeItem(userId:string, itemId: string){
   })
 
   if(itemToRemove){
-    await itemCardRepository.delete(itemToRemove)
+    await itemCartRepository.delete(itemToRemove)
     return true
   }
   
   return false
 }
 
-export async function updateItemQuantity(cardItemId:string, quantity:number){
-  const itemCardRepository = getCustomRepository(ItemCardRepository)
+export async function updateItemQuantity(cartItemId:string, quantity:number){
+  const itemCartRepository = getCustomRepository(ItemCartRepository)
 
-  const item = await itemCardRepository.findOne({
+  const item = await itemCartRepository.findOne({
     where:{
-      id: cardItemId
+      id: cartItemId
     }
   })
 
   item.quantity = quantity
 
-  return await itemCardRepository.save(item)
+  return await itemCartRepository.save(item)
 }
