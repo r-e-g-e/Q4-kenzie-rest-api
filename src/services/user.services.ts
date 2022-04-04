@@ -67,7 +67,7 @@ export async function createJWT({ email, password }:ICreateJWT) {
     throw new ErrorHTTP("Wrong email or password!", 401)
   }
 
-  const jwt = sign(user.id, process.env.JWT_SECRET)
+  const jwt = sign({userId:user.id}, process.env.JWT_SECRET, {expiresIn: "3h"})
 
   return jwt
 }

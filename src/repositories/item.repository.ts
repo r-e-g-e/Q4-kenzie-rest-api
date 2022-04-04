@@ -8,8 +8,8 @@ export default class ItemRepository extends Repository<Item>{
       INSERT INTO 
         itens ("name", "price") 
       VALUES 
-        ('banana', 21),
-        ('maça', 61),
+        ('Banana', 21),
+        ('Maçâ', 61),
         ('Pera', 16),
         ('Honda civic', 600),
         ('Lampada', 20),

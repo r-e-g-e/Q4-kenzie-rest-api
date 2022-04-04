@@ -1,6 +1,5 @@
-import { Entity, OneToOne, JoinColumn, PrimaryGeneratedColumn, JoinTable, OneToMany } from "typeorm"
+import { Entity, OneToOne, JoinColumn, PrimaryGeneratedColumn } from "typeorm"
 import User from "./User"
-import ItemCard from "./ItemCart"
 
 @Entity("carts")
 export default class Cart{
@@ -14,8 +13,4 @@ export default class Cart{
   })
   @JoinColumn()
   userId: string
-
-  @OneToMany( () => ItemCard, item => item)
-  @JoinTable()
-  itens: ItemCard[]
 }

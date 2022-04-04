@@ -1,6 +1,12 @@
 import { Request, Response, NextFunction } from "express"
 import { verify } from "jsonwebtoken"
 
+interface token{
+  userId:string
+  iat:number
+  exp:number
+}
+
 export default function(req:Request, res:Response, next:NextFunction){
   let token = req.headers.authorization
 
@@ -10,9 +16,9 @@ export default function(req:Request, res:Response, next:NextFunction){
 
   token = token.split(" ")[1]
 
-  const userIdDecoded = verify(token, process.env.JWT_SECRET ) as string
-
-  req.userId = userIdDecoded
+  const { userId } = verify(token, process.env.JWT_SECRET ) as token
+  
+  req.userId = userId
 
   next()
 }
