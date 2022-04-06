@@ -1,93 +1,89 @@
-import { getCustomRepository } from "typeorm"
-import CartRepository from "../repositories/cart.repository"
-import ItemCartRepository from "../repositories/itemCart.repository"
+import { getCustomRepository } from "typeorm";
+import CartRepository from "../repositories/cart.repository";
+import ItemCartRepository from "../repositories/itemCart.repository";
 
-interface Iitem{
-  itemId: number
-  quantity: number
+interface Iitem {
+  itemId: number;
+  quantity: number;
 }
 
-export async function getAllItens(userId:string){
-  const cartRepository = getCustomRepository(CartRepository)
-  const itemCartRepository = getCustomRepository(ItemCartRepository)
+export async function getAllItens(userId: string) {
+  const cartRepository = getCustomRepository(CartRepository);
+  const itemCartRepository = getCustomRepository(ItemCartRepository);
 
   const cart = await cartRepository.findOne({
-    where:{
-      userId
-    }
-  })
+    where: {
+      userId,
+    },
+  });
 
   const itens = await itemCartRepository.find({
-    where:{
-      cartId: cart.id
+    where: {
+      cartId: cart.id,
     },
-    select:[
-      "id",
-      "itemId",
-      "quantity",
-    ],
-    loadRelationIds:true
-  })
+    select: ["id", "itemId", "quantity"],
+    loadRelationIds: true,
+  });
 
-  return itens
+  return itens;
 }
 
-export async function addItem(userId:string, {itemId, quantity}:Iitem){
-  const cartRepository = getCustomRepository(CartRepository)
-  const itemCartRepository = getCustomRepository(ItemCartRepository)
+export async function addItem(userId: string, { itemId, quantity }: Iitem) {
+  const cartRepository = getCustomRepository(CartRepository);
+  const itemCartRepository = getCustomRepository(ItemCartRepository);
 
   const cart = await cartRepository.findOne({
-    where:{
-      userId
-    }
-  })
+    where: {
+      userId,
+    },
+  });
 
   const newItem = itemCartRepository.create({
     cartId: cart.id,
     itemId,
-    quantity
-  })
+    quantity,
+  });
 
-  await itemCartRepository.save(newItem)
-  
-  return newItem
+  await itemCartRepository.save(newItem);
+
+  return newItem;
 }
 
-export async function removeItem(userId:string, itemId: string){
-  const cartRepository = getCustomRepository(CartRepository)
-  const itemCartRepository = getCustomRepository(ItemCartRepository)
+export async function removeItem(userId: string, itemId: string) {
+  const cartRepository = getCustomRepository(CartRepository);
+  const itemCartRepository = getCustomRepository(ItemCartRepository);
 
   const cart = await cartRepository.findOne({
-    where:{
-      userId
-    }
-  })
+    where: {
+      userId,
+    },
+  });
 
   const itemToRemove = await itemCartRepository.findOne({
-    where:{
+    where: {
       id: itemId,
-      cartId: cart.id
-    }
-  })
+      cartId: cart.id,
+    },
+  });
 
-  if(itemToRemove){
-    await itemCartRepository.delete(itemToRemove)
-    return true
+  if (itemToRemove) {
+    await itemCartRepository.delete(itemToRemove);
+    return true;
   }
-  
-  return false
+
+  return false;
 }
 
-export async function updateItemQuantity(cartItemId:string, quantity:number){
-  const itemCartRepository = getCustomRepository(ItemCartRepository)
+export async function updateItemQuantity(cartItemId: string, quantity: number) {
+  const itemCartRepository = getCustomRepository(ItemCartRepository);
 
   const item = await itemCartRepository.findOne({
-    where:{
-      id: cartItemId
-    }
-  })
+    where: {
+      cartId: cartItemId,
+    },
+  });
 
-  item.quantity = quantity
+  item.quantity = quantity;
 
-  return await itemCartRepository.save(item)
+  return await itemCartRepository.save(item);
 }

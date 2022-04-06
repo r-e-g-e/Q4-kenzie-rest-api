@@ -1,10 +1,8 @@
-import { app } from "./app"
-import { config } from "dotenv"
+import { app } from "./app";
+import { config } from "dotenv";
 
-config()
+config();
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => 
-  console.log("Running at http://localhost:" + PORT)
-)
+app.listen(PORT, () => console.log("Running at http://localhost:" + PORT));
