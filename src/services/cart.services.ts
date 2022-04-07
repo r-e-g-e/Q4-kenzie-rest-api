@@ -21,7 +21,7 @@ export async function getAllItens(userId: string) {
     where: {
       cartId: cart.id,
     },
-    select: ["id", "itemId", "quantity"],
+    select: ["id", "cartId", "itemId", "quantity"],
     loadRelationIds: true,
   });
 
