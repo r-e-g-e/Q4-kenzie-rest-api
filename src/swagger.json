@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/documentation",
+      "url": "http://localhost:3000/",
       "description": "Development Server"
     }
   ],
